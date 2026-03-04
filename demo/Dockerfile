@@ -7,4 +7,4 @@ RUN ./mvnw dependency:go-offline
 COPY src ./src
 RUN ./mvnw package -DskipTests
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "target/*.jar"]
+ENTRYPOINT ["sh", "-c", "java -jar target/*.jar"]
