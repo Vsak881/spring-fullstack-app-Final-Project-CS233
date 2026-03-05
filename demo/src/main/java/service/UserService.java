@@ -12,7 +12,9 @@ public class UserService {
     private UserRepository userRepository;
 
     public User register(User user) {
-        user.setRole("customer");
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            user.setRole("customer");
+        }
         return userRepository.save(user);
     }
 
