@@ -1,7 +1,5 @@
 package com.finalprojectcs233.demo.model;
-
 import jakarta.persistence.*;
-
 @Entity
 @Table(name = "products")
 public class Product {
@@ -14,6 +12,7 @@ public class Product {
     private int stock;
     private String category;
     private String imageUrl;
+    private Long sellerId;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -29,4 +28,6 @@ public class Product {
     public void setCategory(String category) { this.category = category; }
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public Long getSellerId() { return sellerId; }
+    public void setSellerId(Long sellerId) { this.sellerId = sellerId; }
 }
