@@ -13,15 +13,15 @@ This document declares the use of AI tools during the development of this projec
 
 ### Usage Breakdown
 
-| Area | AI Assistance |
-|------|--------------|
-| Project setup | Guidance on Spring Boot project structure and Maven configuration |
-| Backend code | Help generating and debugging model, repository, service, and controller layers |
-| Frontend code | Assistance writing HTML, CSS (Shopify-style blue theme), and JavaScript |
-| Deployment | Troubleshooting Railway deployment, Dockerfile configuration, and PostgreSQL connection |
-| Debugging | Identifying and fixing compilation errors, API issues, and git problems |
-| Database | Advice on JPA entity relationships and repository query methods |
-| Features | Guidance implementing Cloudinary image uploads, role-based access, and seller-specific product management |
+| Area          | AI Assistance                                                                                             |
+|---------------|-----------------------------------------------------------------------------------------------------------|
+| Project setup | Guidance on Spring Boot project structure and Maven configuration                                         |
+| Backend code  | Help generating and debugging model, repository, service, and controller layers                           |
+| Frontend code | Assistance writing HTML, CSS (Shopify-style blue theme), and JavaScript                                   |
+| Deployment    | Troubleshooting Railway deployment, Dockerfile configuration, and PostgreSQL connection                   |
+| Debugging     | Identifying and fixing compilation errors, API issues, and git problems                                   |
+| Database      | Advice on JPA entity relationships and repository query methods                                           |
+| Features      | Guidance implementing Cloudinary image uploads, role-based access, and seller-specific product management |
 
 ---
 
@@ -33,9 +33,9 @@ AI was used as a **coding assistant and debugging partner**, not to generate the
 - Made all architectural and design decisions
 - Ran all commands and applied all code changes manually
 - Tested and verified all features
-- Understood and reviewed all AI-suggested code before applying
+- Basic understanding of intentions to all AI-suggested code before applying
 
-AI helped accelerate development by suggesting code snippets, explaining errors, and providing guidance on best practices — similar to consulting documentation or Stack Overflow.
+AI helped accelerate development by suggesting code snippets, explaining errors, and providing guidance on best practices.
 
 ---
 
@@ -55,7 +55,3 @@ AI helped accelerate development by suggesting code snippets, explaining errors,
 Using AI assistance significantly sped up development, especially for boilerplate Spring Boot code and deployment troubleshooting. However, understanding each component was still necessary to integrate everything correctly and debug issues that arose.
 
 ---
-
-*Declared by: Vireaksak*
-*Course: CS233*
-*Date: March 2026*
