@@ -1,11 +1,9 @@
 package com.finalprojectcs233.demo.service;
-
 import com.finalprojectcs233.demo.model.Product;
 import com.finalprojectcs233.demo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -16,8 +14,12 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
     }
 
     public Product saveProduct(Product product) {
@@ -26,6 +28,10 @@ public class ProductService {
 
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public List<Product> getProductsBySeller(Long sellerId) {
+        return productRepository.findBySellerId(sellerId);
     }
 
     public List<Product> getProductsByCategory(String category) {

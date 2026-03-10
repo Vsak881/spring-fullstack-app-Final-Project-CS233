@@ -260,18 +260,21 @@ async function loadOrders() {
 }
 
 async function loadSellerProducts() {
+    if (!currentUser) return;
     try {
-        const res = await fetch(`${API}/api/products`);
+        const res = await fetch(`${API}/api/products/seller/${currentUser.id}`);
         const products = await res.json();
-        document.getElementById('admin-products-list').innerHTML = products.map(p => `
-            <div class="admin-product-row">
-                <div>
-                    <div style="font-weight:600">${p.name}</div>
-                    <div style="color:var(--text-muted);font-size:0.8rem">${p.category} — $${p.price}</div>
+        document.getElementById('admin-products-list').innerHTML = products.length > 0
+            ? products.map(p => `
+                <div class="admin-product-row">
+                    <div>
+                        <div style="font-weight:600">${p.name}</div>
+                        <div style="color:var(--text-muted);font-size:0.8rem">${p.category} — $${p.price}</div>
+                    </div>
+                    <button class="btn-danger" onclick="deleteProduct(${p.id})">Delete</button>
                 </div>
-                <button class="btn-danger" onclick="deleteProduct(${p.id})">Delete</button>
-            </div>
-        `).join('') || '<div style="color:var(--text-muted);padding:1rem">No products yet</div>';
+            `).join('')
+            : '<div style="color:var(--text-muted);padding:1rem">No products yet</div>';
     } catch(e) {
         showToast('Could not load products');
     }
@@ -295,7 +298,8 @@ async function addProduct() {
         price: parseFloat(document.getElementById('prod-price').value),
         stock: parseInt(document.getElementById('prod-stock').value),
         category: document.getElementById('prod-category').value,
-        imageUrl: imageUrl
+        imageUrl: imageUrl,
+        sellerId: currentUser.id
     };
     try {
         const res = await fetch(`${API}/api/products`, {
@@ -319,8 +323,9 @@ async function addProduct() {
 }
 
 async function deleteProduct(id) {
+    if (!currentUser) return;
     try {
-        await fetch(`${API}/api/products/${id}`, { method: 'DELETE' });
+        await fetch(`${API}/api/products/${id}?sellerId=${currentUser.id}`, { method: 'DELETE' });
         showToast('Product deleted');
         loadSellerProducts();
         loadProducts();
