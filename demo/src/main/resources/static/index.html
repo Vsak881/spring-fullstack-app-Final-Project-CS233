@@ -1,1 +1,185 @@
-﻿test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS — Premium Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-logo">NEXUS</div>
+    <div class="nav-links">
+        <a href="#" onclick="showPage('home')">Shop</a>
+        <a href="#" onclick="showPage('cart')">Cart <span id="cart-count" class="cart-badge">0</span></a>
+        <a href="#" onclick="showPage('orders')">Orders</a>
+        <div id="auth-links">
+            <a href="#" onclick="showPage('login')" class="btn-nav">Login</a>
+        </div>
+    </div>
+</nav>
+
+<div id="page-home" class="page active">
+    <div class="hero">
+        <div class="hero-content">
+            <p class="hero-tag">✦ New Collection 2025</p>
+            <h1 class="hero-title">Shop Smarter.<br><em>Live Better.</em></h1>
+            <p class="hero-sub">Discover premium products from trusted sellers. Fast delivery, easy returns.</p>
+            <button class="btn-primary" onclick="document.getElementById('products-section').scrollIntoView({behavior:'smooth'})">Shop Now →</button>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-card">
+                <div class="hero-card-badge">New</div>
+                <div class="hero-card-img">🛍️</div>
+                <div class="hero-card-title">Premium Collection</div>
+                <div class="hero-card-price">From $29.99</div>
+            </div>
+        </div>
+    </div>
+    <div class="filter-bar" id="products-section">
+        <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+        <button class="filter-btn" onclick="filterProducts('Electronics', this)">Electronics</button>
+        <button class="filter-btn" onclick="filterProducts('Clothing', this)">Clothing</button>
+        <button class="filter-btn" onclick="filterProducts('Accessories', this)">Accessories</button>
+    </div>
+    <div class="products-grid" id="products-grid">
+        <div class="loading-spinner">Loading products...</div>
+    </div>
+</div>
+
+<div id="page-cart" class="page">
+    <div class="page-header"><h2>Your Cart</h2></div>
+    <div class="cart-container">
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-summary" id="cart-summary" style="display:none">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="btn-primary full-width" onclick="placeOrder()">Place Order</button>
+        </div>
+    </div>
+</div>
+
+<div id="page-orders" class="page">
+    <div class="page-header"><h2>Your Orders</h2></div>
+    <div id="orders-list" class="orders-list"></div>
+</div>
+
+<div id="page-login" class="page">
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Welcome Back</h2>
+            <p class="auth-sub">Sign in to your account</p>
+            <div class="form-group">
+                <input type="email" id="login-email" placeholder="Email address" class="form-input">
+            </div>
+            <div class="form-group">
+                <input type="password" id="login-password" placeholder="Password" class="form-input">
+            </div>
+            <button class="btn-primary full-width" onclick="login()">Sign In</button>
+            <p class="auth-switch">Don't have an account? <a href="#" onclick="showPage('register')">Register</a></p>
+            <div id="login-error" class="error-msg"></div>
+        </div>
+    </div>
+</div>
+
+<div id="page-register" class="page">
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Create Account</h2>
+            <p class="auth-sub">Join NEXUS today</p>
+            <div class="form-group">
+                <input type="text" id="reg-username" placeholder="Username" class="form-input">
+            </div>
+            <div class="form-group">
+                <input type="email" id="reg-email" placeholder="Email address" class="form-input">
+            </div>
+            <div class="form-group">
+                <input type="password" id="reg-password" placeholder="Password" class="form-input">
+            </div>
+            <div class="form-group">
+                <label class="form-label">I want to</label>
+                <div class="role-selector">
+                    <div class="role-option selected" onclick="selectRole('customer', this)">
+                        <div class="role-icon">🛒</div>
+                        <div class="role-name">Buy</div>
+                        <div class="role-desc">Shop products</div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('seller', this)">
+                        <div class="role-icon">🏪</div>
+                        <div class="role-name">Sell</div>
+                        <div class="role-desc">List products</div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="reg-role" value="customer">
+            <button class="btn-primary full-width" onclick="register()">Create Account</button>
+            <p class="auth-switch">Already have an account? <a href="#" onclick="showPage('login')">Sign In</a></p>
+            <div id="reg-error" class="error-msg"></div>
+        </div>
+    </div>
+</div>
+
+<div id="page-seller" class="page">
+    <div class="page-header"><h2>Seller Dashboard</h2></div>
+    <div class="admin-container">
+        <div class="admin-card">
+            <h3>Add New Product</h3>
+            <div class="form-group">
+                <input type="text" id="prod-name" placeholder="Product name" class="form-input">
+            </div>
+            <div class="form-group">
+                <input type="text" id="prod-desc" placeholder="Description" class="form-input">
+            </div>
+            <div class="form-row">
+                <input type="number" id="prod-price" placeholder="Price" class="form-input">
+                <input type="number" id="prod-stock" placeholder="Stock" class="form-input">
+            </div>
+            <div class="form-group">
+                <select id="prod-category" class="form-input">
+                    <option value="">Select category</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Accessories">Accessories</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Product Image</label>
+                <input type="file" id="prod-image" accept="image/*" class="form-input">
+                <div id="image-preview" style="margin-top:0.5rem"></div>
+            </div>
+            <button class="btn-primary" onclick="addProduct()">Add Product</button>
+            <div id="admin-msg" class="success-msg"></div>
+        </div>
+        <div class="admin-card">
+            <h3>Your Products</h3>
+            <div id="admin-products-list"></div>
+        </div>
+    </div>
+</div>
+
+<div id="page-admin" class="page">
+    <div class="page-header"><h2>Admin Panel</h2></div>
+    <div class="admin-container">
+        <div class="admin-card">
+            <h3>All Products</h3>
+            <div id="admin-products-list-full"></div>
+        </div>
+        <div class="admin-card">
+            <h3>All Orders</h3>
+            <div id="admin-orders-list"></div>
+        </div>
+        <div class="admin-card">
+            <h3>All Users</h3>
+            <div id="admin-users-list"></div>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
